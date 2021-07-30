@@ -3,6 +3,7 @@ WORKDIR /var/www/html
 
 ENV APACHE_DOCUMENT_ROOT=/var/www/html
 
+COPY ./assets/virtual-host.conf /etc/apache2/sites-enabled/000-default.conf
 RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
 RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
 
@@ -34,6 +35,13 @@ RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
 
 # Install required extensions
 RUN docker-php-ext-install intl mysqli pdo pdo_mysql ctype iconv json session simplexml tokenizer
+
+# Support for SSL (@see: https://github.com/microsoft/msphpsql/issues/1056#issuecomment-553198252)
+RUN apt-get update -yqq \
+    && apt-get install -y --no-install-recommends openssl \
+    && sed -i 's,^\(MinProtocol[ ]*=\).*,\1'TLSv1.0',g' /etc/ssl/openssl.cnf \
+    && sed -i 's,^\(CipherString[ ]*=\).*,\1'DEFAULT@SECLEVEL=1',g' /etc/ssl/openssl.cnf\
+    && rm -rf /var/lib/apt/lists/*
 
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
