@@ -30,6 +30,14 @@ doctrine:
         charset: 'UTF-8'
 ```
 
+### DOCKER IMAGE
+
+[Docker Hub](https://hub.docker.com/r/matteogatti/symfony-sqlsrv)
+
+```
+docker pull matteogatti/symfony-sqlsrv
+```
+
 ### SEE ALSO
 
 - Requirements for Running Symfony [link](https://symfony.com/doc/4.2/reference/requirements.html)
