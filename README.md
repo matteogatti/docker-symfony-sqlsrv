@@ -21,12 +21,12 @@ doctrine:
     connections:
       default:
         driver: 'sqlsrv'
-        host: '%env(resolve:ZUCCHETTI_DATABASE_HOST)%'
-        dbname: '%env(resolve:ZUCCHETTI_DATABASE_NAME)%'
-        user: '%env(resolve:ZUCCHETTI_DATABASE_USER)%'
-        password: '%env(resolve:ZUCCHETTI_DATABASE_PASSWORD)%'
-        port: '%env(resolve:ZUCCHETTI_DATABASE_PORT)%'
-        server_version: '2012'
+        host: '%env(resolve:MSSQL_DATABASE_HOST)%'
+        dbname: '%env(resolve:MSSQL_DATABASE_NAME)%'
+        user: '%env(resolve:MSSQL_DATABASE_USER)%'
+        password: '%env(resolve:MSSQL_DATABASE_PASSWORD)%'
+        port: '%env(resolve:MSSQL_DATABASE_PORT)%'
+	server_version: '11.0.2100.60'
         charset: 'UTF-8'
 ```
 
