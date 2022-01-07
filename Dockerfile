@@ -43,6 +43,10 @@ RUN apt-get update -yqq \
     && sed -i 's,^\(CipherString[ ]*=\).*,\1'DEFAULT@SECLEVEL=1',g' /etc/ssl/openssl.cnf\
     && rm -rf /var/lib/apt/lists/*
 
+# Avoid PHP memory limit
+RUN cd /usr/local/etc/php/conf.d/ && \
+  echo 'memory_limit = -1' >> /usr/local/etc/php/conf.d/docker-php-memlimit.ini
+
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
